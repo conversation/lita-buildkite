@@ -24,21 +24,18 @@ module Lita
       private
 
       def process_build_finished(event, &block)
+        repository = DaysSinceMasterFailureRepository.new(redis, event.pipeline)
         repository.record_result(event.passed?) do |days_since_last_failure, prev_days_since_last_failure|
           if days_since_last_failure < prev_days_since_last_failure
-            yield "Oh Oh, #{days_since_last_failure} day(s) since the last master failure"
+            yield "Oh Oh, #{days_since_last_failure} day(s) since the last master failure on #{event.pipeline}"
           elsif days_since_last_failure > prev_days_since_last_failure
-            yield "Congratulations! #{days_since_last_failure} day(s) since the last master failure"
+            yield "Congratulations! #{days_since_last_failure} day(s) since the last master failure on #{event.pipeline}"
           end
         end
       end
 
       def target
         Source.new(room: Lita::Room.find_by_name(config.channel_name) || "general")
-      end
-
-      def repository
-        @repository ||= DaysSinceMasterFailureRepository.new(redis)
       end
 
     end
