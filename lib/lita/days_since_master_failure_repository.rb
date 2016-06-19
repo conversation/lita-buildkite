@@ -1,8 +1,10 @@
 # Provides all persistence logic for the DaysSinceMasterFailure handler, insulating
 # the handler from any knowledge of redis
 class DaysSinceMasterFailureRepository
-  def initialize(redis)
+  def initialize(redis, pipeline_name)
     @redis = redis
+    @last_failure_key = "last-failure-at-#{pipeline_name}"
+    @last_reported_days_key = "last-reported-days-#{pipeline_name}"
 
     initialise_last_failure_at_if_not_set
   end
@@ -24,7 +26,7 @@ class DaysSinceMasterFailureRepository
   end
 
   def touch_last_failure_at
-    @redis.set("last-failure-at", ::Time.now.to_i)
+    @redis.set(@last_failure_key, ::Time.now.to_i)
   end
 
   def touch_last_reported_days
@@ -32,18 +34,18 @@ class DaysSinceMasterFailureRepository
   end
 
   def fetch_last_failure_at
-    @redis.get("last-failure-at").to_i
+    @redis.get(@last_failure_key).to_i
   end
 
   def set_last_reported_days(days)
-    @redis.set("last-reported-days", days.to_i)
+    @redis.set(@last_reported_days_key, days.to_i)
   end
 
   def last_reported_days
-    @redis.get("last-reported-days").to_i
+    @redis.get(@last_reported_days_key).to_i
   end
 
   def initialise_last_failure_at_if_not_set
-    @redis.setnx("last-failure-at", ::Time.now.to_i)
+    @redis.setnx(@last_failure_key, ::Time.now.to_i)
   end
 end
