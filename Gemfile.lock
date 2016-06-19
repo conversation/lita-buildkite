@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    lita-buildkite (1.0.0)
+    lita-buildkite (0.1.0)
       lita
 
 GEM
