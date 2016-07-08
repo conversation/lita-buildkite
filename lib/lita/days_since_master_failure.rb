@@ -14,7 +14,7 @@ module Lita
       def timestamp_failure(payload)
         event = payload[:event]
 
-        if event.branch == "master" && event.build_finished?
+        if event.branch == "master" && event.name == "build.finished"
           process_build_finished(event) do |msg|
             robot.send_message(target, msg)
           end
