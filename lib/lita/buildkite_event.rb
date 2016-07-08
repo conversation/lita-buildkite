@@ -9,6 +9,8 @@ class BuildkiteEvent
     case data.fetch("event", "")
     when "build.finished" then
       BuildkiteBuildFinishedEvent.new(data)
+    when "job.finished" then
+      BuildkiteJobFinishedEvent.new(data)
     else
       BuildkiteUnknownEvent.new(data)
     end
