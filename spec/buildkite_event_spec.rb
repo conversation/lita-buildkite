@@ -6,6 +6,12 @@ describe BuildkiteEvent do
   let(:json) { File.read(json_path) }
   let(:event) { BuildkiteEvent.new(json)}
 
+  describe '.name' do
+    it "returns the correct value" do
+      expect(event.name).to eq "build.finished"
+    end
+  end
+
   describe '.build_finished?' do
     it "returns true" do
       expect(event.build_finished?).to eq true

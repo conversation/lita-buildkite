@@ -1,4 +1,5 @@
 {
+ "event": "build.finished",
  "build": {
    "id": "2ce9746f-cc8e-4bca-a878-4645848e040e",
    "url": "https://api.buildkite.com/v2/organizations/org-name/pipelines/pipeline-name/builds/2",

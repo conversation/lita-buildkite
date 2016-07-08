@@ -7,6 +7,10 @@ class BuildkiteEvent
     @data = JSON.load(data)
   end
 
+  def name
+    @data.fetch("event", "")
+  end
+
   def build_finished?
     @data.fetch("build", {}).fetch("finished_at", "") != ""
   end
