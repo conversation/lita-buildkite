@@ -3,7 +3,7 @@ require 'json'
 
 describe BuildkiteBuildFinishedEvent do
   let(:json_path) { File.join(File.dirname(__FILE__), "fixtures", "buildkite_build_finished.json")}
-  let(:json) { File.read(json_path) }
+  let(:json) { JSON.load(File.read(json_path)) }
   let(:event) { BuildkiteBuildFinishedEvent.new(json)}
 
   describe '.name' do
