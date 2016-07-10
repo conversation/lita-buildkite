@@ -18,9 +18,27 @@ describe BuildkiteBuildFinishedEvent do
     end
   end
 
+  describe '.build_branch' do
+    it "returns the branch name" do
+      expect(event.branch).to eq "master"
+    end
+  end
+
   describe '.pipeline' do
     it "returns the pipeline name" do
       expect(event.pipeline).to eq "pipeline-name"
+    end
+  end
+
+  describe '.pipeline_name' do
+    it "returns the pipeline name" do
+      expect(event.pipeline).to eq "pipeline-name"
+    end
+  end
+
+  describe '.pipeline_slug' do
+    it "returns the pipeline name" do
+      expect(event.pipeline_slug).to eq "pipeline-name"
     end
   end
 

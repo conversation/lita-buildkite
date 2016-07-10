@@ -11,16 +11,30 @@ class BuildkiteBuildFinishedEvent
     @data.fetch("event", "")
   end
 
+  # deprecated
   def branch
-    @data.fetch("build", {}).fetch("branch", "")
+    build_branch
   end
 
+  # deprecated
   def pipeline
+    pipeline_name
+  end
+
+  def pipeline_name
     @data.fetch("pipeline", {}).fetch("name", "")
+  end
+
+  def pipeline_slug
+    @data.fetch("pipeline", {}).fetch("slug", "")
   end
 
   def passed?
     @data.fetch("build", {}).fetch("state", "") == "passed"
+  end
+
+  def build_branch
+    @data.fetch("build", {}).fetch("branch", "")
   end
 
   def build_created_at
