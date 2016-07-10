@@ -9,10 +9,6 @@ class BuildkiteBuildFinishedEvent
     @data.fetch("event", "")
   end
 
-  def build_finished?
-    @data.fetch("build", {}).fetch("finished_at", "") != ""
-  end
-
   def branch
     @data.fetch("build", {}).fetch("branch", "")
   end

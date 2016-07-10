@@ -12,12 +12,6 @@ describe BuildkiteBuildFinishedEvent do
     end
   end
 
-  describe '.build_finished?' do
-    it "returns true" do
-      expect(event.build_finished?).to eq true
-    end
-  end
-
   describe '.branch' do
     it "returns the branch name" do
       expect(event.branch).to eq "master"
