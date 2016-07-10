@@ -2,7 +2,7 @@ require 'json'
 
 # Value object that wraps raw buildkite webhook data and provides convenience
 # methods for querying it
-class BuildkiteEvent
+class BuildkiteBuildFinishedEvent
   def initialize(data)
     @data = JSON.load(data)
   end

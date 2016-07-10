@@ -1,5 +1,5 @@
 require "lita"
-require 'lita/buildkite_event'
+require 'lita/buildkite_build_finished_event'
 require 'lita/days_since_master_failure_repository'
 
 module Lita

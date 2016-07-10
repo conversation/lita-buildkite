@@ -4,7 +4,7 @@ describe Lita::Handlers::DaysSinceMasterFailure, lita_handler: true do
   let(:handler) { Lita::Handlers::DaysSinceMasterFailure.new(robot) }
 
   describe "#timestamp_failure" do
-    let(:event) { BuildkiteEvent.new(event_json)}
+    let(:event) { BuildkiteBuildFinishedEvent.new(event_json)}
     let(:payload) { {event: event} }
     let(:repository) { instance_double(DaysSinceMasterFailureRepository) }
 

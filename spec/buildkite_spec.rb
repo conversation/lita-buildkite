@@ -19,7 +19,7 @@ describe Lita::Handlers::Buildkite, lita_handler: true do
 
     it "emits a lita event" do
       handler.buildkite_event(request, response)
-      expect(robot).to have_received(:trigger).with(:buildkite_event, event: a_kind_of(BuildkiteEvent))
+      expect(robot).to have_received(:trigger).with(:buildkite_event, event: a_kind_of(BuildkiteBuildFinishedEvent))
     end
   end
 end

@@ -1,10 +1,10 @@
-require 'lita/buildkite_event'
+require 'lita/buildkite_build_finished_event'
 require 'json'
 
-describe BuildkiteEvent do
+describe BuildkiteBuildFinishedEvent do
   let(:json_path) { File.join(File.dirname(__FILE__), "fixtures", "buildkite_build_finished.json")}
   let(:json) { File.read(json_path) }
-  let(:event) { BuildkiteEvent.new(json)}
+  let(:event) { BuildkiteBuildFinishedEvent.new(json)}
 
   describe '.name' do
     it "returns the correct value" do
