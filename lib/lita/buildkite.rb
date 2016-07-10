@@ -1,5 +1,6 @@
 require "lita"
 require 'lita/buildkite_event'
+require 'lita/buildkite_build_finished_event'
 
 module Lita
   module Handlers
@@ -10,8 +11,13 @@ module Lita
       http.post "/buildkite", :buildkite_event
 
       def buildkite_event(request, response)
-        event = BuildkiteEvent.new(request.body.read)
-        robot.trigger(:buildkite_event, event: event)
+        event = BuildkiteEvent.build(request.body.read)
+        case event
+        when BuildkiteBuildFinishedEvent 
+          robot.trigger(:buildkite_build_finished, event: event)
+        else
+          puts "UnsupportedEvent: #{event.class}"
+        end
       end
 
     end

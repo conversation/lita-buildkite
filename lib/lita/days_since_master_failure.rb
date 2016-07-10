@@ -1,5 +1,5 @@
 require "lita"
-require 'lita/buildkite_event'
+require 'lita/buildkite_build_finished_event'
 require 'lita/days_since_master_failure_repository'
 
 module Lita
@@ -9,7 +9,7 @@ module Lita
     class DaysSinceMasterFailure < Handler
       config :channel_name
 
-      on :buildkite_event, :timestamp_failure
+      on :buildkite_build_finished, :timestamp_failure
 
       def timestamp_failure(payload)
         event = payload[:event]

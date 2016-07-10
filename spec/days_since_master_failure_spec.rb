@@ -4,7 +4,7 @@ describe Lita::Handlers::DaysSinceMasterFailure, lita_handler: true do
   let(:handler) { Lita::Handlers::DaysSinceMasterFailure.new(robot) }
 
   describe "#timestamp_failure" do
-    let(:event) { BuildkiteEvent.new(event_json)}
+    let(:event) { BuildkiteBuildFinishedEvent.new(event_json)}
     let(:payload) { {event: event} }
     let(:repository) { instance_double(DaysSinceMasterFailureRepository) }
 
@@ -16,6 +16,7 @@ describe Lita::Handlers::DaysSinceMasterFailure, lita_handler: true do
     context "a master build failed" do
       let(:event_json) {
         {
+          name: "build.finished",
           build: {
             finished_at: "2016-03-22 12:00:00",
             branch: "master",
@@ -24,7 +25,7 @@ describe Lita::Handlers::DaysSinceMasterFailure, lita_handler: true do
           pipeline: {
             name: "tc"
           }
-        }.to_json
+        }
       }
 
       context "we've never reported a result" do

@@ -1,29 +1,16 @@
+require 'lita/buildkite_build_finished_event'
+require 'lita/buildkite_unknown_event'
 require 'json'
 
-# Value object that wraps raw buildkite webhook data and provides convenience
-# methods for querying it
 class BuildkiteEvent
-  def initialize(data)
-    @data = JSON.load(data)
-  end
+  def self.build(string)
+    data = JSON.load(string)
 
-  def name
-    @data.fetch("event", "")
-  end
-
-  def build_finished?
-    @data.fetch("build", {}).fetch("finished_at", "") != ""
-  end
-
-  def branch
-    @data.fetch("build", {}).fetch("branch", "")
-  end
-
-  def pipeline
-    @data.fetch("pipeline", {}).fetch("name", "")
-  end
-
-  def passed?
-    @data.fetch("build", {}).fetch("state", "") == "passed"
+    case data.fetch("event", "")
+    when "build.finished" then
+      BuildkiteBuildFinishedEvent.new(data)
+    else
+      BuildkiteUnknownEvent.new(data)
+    end
   end
 end
