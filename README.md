@@ -30,6 +30,16 @@ a string of days with no failures, and commiserate when a master branch build fa
 
 This handler provides no additional chat commands. Yet.
 
+## Lita Events
+
+This handler will emit some buildkite events onto the lita event bus, allowing other handlers
+to respond them.
+
+Currently, the following events are emitted:
+
+* buildkite\_build\_finished
+* buildkite\_job\_finished
+
 ## TODO
 
 Possible ideas for new features, either via chat commands or externally triggered events:
