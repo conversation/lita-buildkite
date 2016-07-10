@@ -29,4 +29,22 @@ describe BuildkiteBuildFinishedEvent do
       expect(event.passed?).to eq true
     end
   end
+
+  describe 'build_created_at' do
+    it "returns correct time" do
+      expect(event.build_created_at).to eq Time.utc(2016,3,20,9,46,52)
+    end
+  end
+
+  describe 'build_started_at' do
+    it "returns correct time" do
+      expect(event.build_started_at).to eq Time.utc(2016,3,20,9,46,55)
+    end
+  end
+
+  describe 'build_finished_at' do
+    it "returns correct time" do
+      expect(event.build_finished_at).to eq Time.utc(2016,3,20,9,48,23)
+    end
+  end
 end

@@ -1,3 +1,5 @@
+require 'date'
+
 # Value object that wraps raw buildkite webhook data and provides convenience
 # methods for querying it
 class BuildkiteBuildFinishedEvent
@@ -19,5 +21,20 @@ class BuildkiteBuildFinishedEvent
 
   def passed?
     @data.fetch("build", {}).fetch("state", "") == "passed"
+  end
+
+  def build_created_at
+    value = @data.fetch("build", {}).fetch("created_at", nil)
+    value ? DateTime.parse(value).to_time : nil
+  end
+
+  def build_started_at
+    value = @data.fetch("build", {}).fetch("started_at", nil)
+    value ? DateTime.parse(value).to_time : nil
+  end
+
+  def build_finished_at
+    value = @data.fetch("build", {}).fetch("finished_at", nil)
+    value ? DateTime.parse(value).to_time : nil
   end
 end
