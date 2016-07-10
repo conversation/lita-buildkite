@@ -59,4 +59,10 @@ describe BuildkiteJobFinishedEvent do
       expect(event.pipeline_name).to eq "pipeline-name"
     end
   end
+
+  describe '.pipeline_slig' do
+    it "returns the pipeline slug" do
+      expect(event.pipeline_slug).to eq "pipeline-name"
+    end
+  end
 end
