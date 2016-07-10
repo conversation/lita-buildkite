@@ -27,6 +27,16 @@ describe Lita::Handlers::Buildkite, lita_handler: true do
       end
     end
 
+    context "with a job.finished event" do
+      let(:json_path) { File.join(File.dirname(__FILE__), "fixtures", "buildkite_job_finished.json")}
+      let(:event_json) { File.read(json_path) }
+
+      it "emits a lita event" do
+        handler.buildkite_event(request, response)
+        expect(robot).to have_received(:trigger).with(:buildkite_job_finished, event: a_kind_of(BuildkiteJobFinishedEvent))
+      end
+    end
+
     context "with an unrecognised event" do
       let(:event_json) { "{}" }
 

@@ -1,0 +1,107 @@
+{
+  "event": "job.finished",
+  "job": {
+    "id": "46e36da0-a40c-4d2f-a564-60f2961e90ce",
+    "type": "script",
+    "name": "Lint",
+    "agent_query_rules": [],
+    "state": "passed",
+    "build_url": "https://api.buildkite.com/v2/organizations/org-name/pipelines/pipeline-name/builds/1390",
+    "web_url": "https://buildkite.com/org-name/pipeline-name/builds/1390#46e36da0-a40c-4d2f-a564-60f2961e90ce",
+    "log_url": "https://api.buildkite.com/v2/organizations/org-name/pipelines/pipeline-name/builds/1390/jobs/46e36da0-a40c-4d2f-a564-60f2961e90ce/log",
+    "raw_log_url": "https://api.buildkite.com/v2/organizations/org-name/pipelines/pipeline-name/builds/1390/jobs/46e36da0-a40c-4d2f-a564-60f2961e90ce/log.txt",
+    "artifacts_url": "https://api.buildkite.com/v2/organizations/org-name/pipelines/pipeline-name/builds/1390/jobs/46e36da0-a40c-4d2f-a564-60f2961e90ce/artifacts",
+    "command": "bin/lint",
+    "exit_status": 0,
+    "artifact_paths": "",
+    "agent": {
+      "id": "33f65251-e98c-44a3-b658-8959fb037933",
+      "url": "https://api.buildkite.com/v2/organizations/org-name/agents/33f65251-e98c-44a3-b658-8959fb037933",
+      "web_url": "https://buildkite.com/organizations/org-name/agents/33f65251-e98c-44a3-b658-8959fb037933",
+      "name": "tank-1",
+      "connection_state": "connected",
+      "ip_address": "1.1.1.1",
+      "access_token": "ABCD1234",
+      "hostname": "tank",
+      "user_agent": "buildkite-agent/2.1.4 (linux; amd64)",
+      "version": "2.1.4",
+      "creator": null,
+      "created_at": "2016-07-05 23:46:40 UTC",
+      "job": null,
+      "last_job_finished_at": "2016-07-08 07:25:40 UTC",
+      "priority": 0,
+      "meta_data": []
+    },
+    "created_at": "2016-07-08 07:25:23 UTC",
+    "scheduled_at": "2016-07-08 07:25:23 UTC",
+    "started_at": "2016-07-08 07:25:29 UTC",
+    "finished_at": "2016-07-08 07:25:40 UTC"
+  },
+ "build": {
+   "id": "2ce9746f-cc8e-4bca-a878-4645848e040e",
+   "url": "https://api.buildkite.com/v2/organizations/org-name/pipelines/pipeline-name/builds/2",
+   "web_url": "https://buildkite.com/org-name/pipeline-name/builds/2",
+   "number": 2,
+   "state": "passed",
+   "message": "Merge pull request #22 from org-name/branch-name\n\npull request name",
+   "commit": "328a9c8135c793b76ca7c29cc449b0733d18365a",
+   "branch": "master",
+   "tag": null,
+   "source": "webhook",
+   "creator": {
+     "id": "5aaf22d7-4aa4-4ed7-b347-12345678901",
+     "name": "James Healy",
+     "email": "james@example.com",
+     "avatar_url": "https://www.gravatar.com/avatar/1234567890",
+     "created_at": "2013-09-29 23:50:05 UTC"
+   },
+   "created_at": "2016-07-08 07:25:23 UTC",
+   "scheduled_at": "2016-07-08 07:25:23 UTC",
+   "started_at": "2016-07-08 07:25:29 UTC",
+   "finished_at": "2016-07-08 07:25:50 UTC",
+   "meta_data": {
+     "buildkite:git:branch": "* (detached from 328a9c8)",
+     "buildkite:git:commit": "commit 328a9c8135c793b76ca7c29cc449b0733d18365a"
+   }
+ },
+ "pipeline": {
+   "id": "92c2128c-a5e9-471a-9bc8-65fb91d89ba9",
+   "url": "https://api.buildkite.com/v2/organizations/org-name/pipelines/pipeline-name",
+   "web_url": "https://buildkite.com/org-name/pipeline-name",
+   "name": "pipeline-name",
+   "slug": "pipeline-name",
+   "repository": "git@github.com:org-name/projec.git",
+   "provider": {
+     "id": "github",
+     "webhook_url": "https://webhook.buildkite.com/deliver/af290593c2018d03f4f7903bb2144896712976d509dc6c8612"
+   },
+   "builds_url": "https://api.buildkite.com/v2/organizations/org-name/pipelines/pipeline-name/builds",
+   "created_at": "2016-02-01 23:08:40 UTC",
+   "steps": [
+     {
+       "type": "script",
+       "name": "",
+       "command": "bin/ci",
+       "artifact_paths": "",
+       "branch_configuration": "",
+       "env": {
+       },
+       "timeout_in_minutes": null,
+       "agent_query_rules": [        ],
+       "concurrency": null,
+       "parallelism": null
+     }
+   ],
+   "env": {
+   },
+   "scheduled_builds_count": 0,
+   "running_builds_count": 0,
+   "scheduled_jobs_count": 0,
+   "running_jobs_count": 0,
+   "waiting_jobs_count": 0
+ },
+  "sender": {
+    "id": "5aaf22d7-4aa4-4ed7-b347-c43dd5c674d6",
+    "name": "James Healy"
+  }
+}
