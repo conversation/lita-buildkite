@@ -11,7 +11,7 @@ module Lita
 
       def buildkite_event(request, response)
         event = BuildkiteBuildFinishedEvent.new(request.body.read)
-        robot.trigger(:buildkite_event, event: event)
+        robot.trigger(:buildkite_build_finished, event: event)
       end
 
     end

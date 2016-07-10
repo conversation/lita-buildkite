@@ -9,7 +9,7 @@ module Lita
     class DaysSinceMasterFailure < Handler
       config :channel_name
 
-      on :buildkite_event, :timestamp_failure
+      on :buildkite_build_finished, :timestamp_failure
 
       def timestamp_failure(payload)
         event = payload[:event]
