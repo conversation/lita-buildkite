@@ -36,4 +36,8 @@ class BuildkiteJobFinishedEvent
   def agent_hostname
     @data.fetch("job", {}).fetch("agent",{}).fetch("hostname","")
   end
+
+  def build_branch
+    @data.fetch("build", {}).fetch("branch","")
+  end
 end

@@ -47,4 +47,10 @@ describe BuildkiteJobFinishedEvent do
       expect(event.agent_hostname).to eq "tank"
     end
   end
+
+  describe '.build_branch' do
+    it "returns the build branch name" do
+      expect(event.build_branch).to eq "master"
+    end
+  end
 end
