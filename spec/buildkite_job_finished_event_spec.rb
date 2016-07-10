@@ -26,13 +26,13 @@ describe BuildkiteJobFinishedEvent do
 
   describe '.job_started_at' do
     it "returns the correct time" do
-      expect(event.job_started_at).to eq DateTime.new(2016,7,8,7,25,29)
+      expect(event.job_started_at).to eq Time.utc(2016,7,8,7,25,29)
     end
   end
 
   describe '.job_finished_at' do
     it "returns the correct time" do
-      expect(event.job_finished_at).to eq DateTime.new(2016,7,8,7,25,40)
+      expect(event.job_finished_at).to eq Time.utc(2016,7,8,7,25,40)
     end
   end
 

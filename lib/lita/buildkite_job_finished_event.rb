@@ -21,12 +21,12 @@ class BuildkiteJobFinishedEvent
 
   def job_started_at
     value = @data.fetch("job", {}).fetch("started_at", nil)
-    value ? DateTime.parse(value) : nil
+    value ? DateTime.parse(value).to_time : nil
   end
 
   def job_finished_at
     value = @data.fetch("job", {}).fetch("finished_at", nil)
-    value ? DateTime.parse(value) : nil
+    value ? DateTime.parse(value).to_time : nil
   end
 
   def agent_name
