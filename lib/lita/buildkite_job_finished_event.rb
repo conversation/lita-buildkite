@@ -40,4 +40,8 @@ class BuildkiteJobFinishedEvent
   def build_branch
     @data.fetch("build", {}).fetch("branch","")
   end
+
+  def pipeline_name
+    @data.fetch("pipeline", {}).fetch("name", "")
+  end
 end
