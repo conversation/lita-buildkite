@@ -18,6 +18,12 @@ describe BuildkiteJobFinishedEvent do
     end
   end
 
+  describe '.job_slug' do
+    it "returns the job slug" do
+      expect(event.job_slug).to eq "lint"
+    end
+  end
+
   describe '.job_state' do
     it "returns the job state" do
       expect(event.job_state).to eq "passed"

@@ -15,6 +15,10 @@ class BuildkiteJobFinishedEvent
     @data.fetch("job", {}).fetch("name","")
   end
 
+  def job_slug
+    slugorize(job_name)
+  end
+
   def job_state
     @data.fetch("job", {}).fetch("state","")
   end
@@ -47,5 +51,18 @@ class BuildkiteJobFinishedEvent
 
   def pipeline_slug
     @data.fetch("pipeline", {}).fetch("slug", "")
+  end
+
+  private
+
+  def slugorize(input)
+    result = input.to_s.downcase
+    result.gsub!(/['|’]/, '')           # Remove apostrophes
+    result.gsub!('&', 'and')            # Replace & with 'and'
+    result.gsub!(/[^a-z0-9\-]/, '-')    # Get rid of anything we don't like
+    result.gsub!(/-+/, '-')             # collapse dashes
+    result.gsub!(/-$/, '')              # trim dashes
+    result.gsub!(/^-/, '')              # trim dashes
+    result
   end
 end
