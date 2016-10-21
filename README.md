@@ -40,6 +40,25 @@ Currently, the following events are emitted:
 * buildkite\_build\_finished
 * buildkite\_job\_finished
 
+To respond to the events, write a new handler that looks something like this:
+
+    class BuildkiteDebugHandler < Lita::Handlers::Handler
+      on :buildkite_build_finished, :debug
+      on :buildkite_job_finished, :debug
+
+      def debug(payload)
+        event = payload[:event]
+
+        robot.send_message(target, event.inspect)
+      end
+
+      private
+
+      def target
+        Source.new(room: Lita::Room.find_by_name(config.channel_name) || "general")
+      end
+    end
+
 ## TODO
 
 Possible ideas for new features, either via chat commands or externally triggered events:
