@@ -42,6 +42,12 @@ describe BuildkiteBuildFinishedEvent do
     end
   end
 
+  describe '.build_web_url' do
+    it "returns with the build web_url" do
+      expect(event.build_web_url).to eq "https://buildkite.com/org-name/pipeline-name/builds/2"
+    end
+  end
+
   describe '.passed?' do
     it "returns true" do
       expect(event.passed?).to eq true
