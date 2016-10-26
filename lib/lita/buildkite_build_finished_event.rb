@@ -29,6 +29,10 @@ class BuildkiteBuildFinishedEvent
     @data.fetch("pipeline", {}).fetch("slug", "")
   end
 
+  def build_web_url
+    @data.fetch("build", {}).fetch("web_url", "")
+  end
+
   def passed?
     @data.fetch("build", {}).fetch("state", "") == "passed"
   end
