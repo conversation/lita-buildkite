@@ -1,3 +1,5 @@
+require 'lita/build_status_report'
+
 # Provides all persistence logic for the DaysSinceMasterFailure handler, insulating
 # the handler from any knowledge of redis
 class DaysSinceMasterFailureRepository
@@ -9,9 +11,13 @@ class DaysSinceMasterFailureRepository
     initialise_last_failure_at_if_not_set
   end
 
-  def record_result(success, &block)
-    touch_last_failure_at if !success
-    yield days_since_last_failure, last_reported_days
+  def record_result(event, &block)
+    touch_last_failure_at if !event.passed?
+
+    BuildStatusReport.new(event, days_since_last_failure, last_reported_days) do |message|
+      yield message
+    end
+
     touch_last_reported_days
   end
 

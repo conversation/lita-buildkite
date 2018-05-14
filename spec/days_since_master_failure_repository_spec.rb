@@ -1,9 +1,10 @@
 require "lita/days_since_master_failure_repository"
+require "lita/buildkite_job_finished_event"
 
 RSpec.describe DaysSinceMasterFailureRepository do
   let(:fake_redis) { instance_double(Redis) }
-  let(:days_since_last_failure) { 123 }
-  let(:last_reported_days) { 321 }
+  let(:days_since_last_failure) { 2 }
+  let(:last_reported_days) { 2 }
 
   before do
     allow(fake_redis).to receive(:setnx).with("last-failure-at-my-pipeline", instance_of(Integer))
@@ -24,22 +25,21 @@ RSpec.describe DaysSinceMasterFailureRepository do
   describe "#record_result" do
     let(:repository) { DaysSinceMasterFailureRepository.new(fake_redis, "my-pipeline") }
 
-    it "yields days_since_last_failure, last_reported_days" do
+    it "yields a message" do
       expect { |b|
-        repository.record_result(nil, &b)
-      }.to yield_with_args(instance_of(Integer), last_reported_days)
+        repository.record_result(instance_double(BuildkiteBuildFinishedEvent, passed?: false, pipeline: "my-pipeline"), &b)
+      }.to yield_with_args(instance_of(String))
     end
 
     it "updates last-reported-days value" do
-      repository.record_result(nil) {}
+      repository.record_result(instance_double(BuildkiteBuildFinishedEvent, passed?: false, pipeline: "my-pipeline")) {}
 
       expect(fake_redis).to have_received(:set).with("last-reported-days-my-pipeline", instance_of(Integer))
     end
 
     context "successful build" do
       it "does not update last-failure-at value" do
-        success = true
-        repository.record_result(success) {}
+        repository.record_result(instance_double(BuildkiteBuildFinishedEvent, passed?: true, pipeline: "my-pipeline")) {}
 
         expect(fake_redis).to_not have_received(:set).with("last-failure-at-my-pipeline", instance_of(Integer))
       end
@@ -47,8 +47,7 @@ RSpec.describe DaysSinceMasterFailureRepository do
 
     context "unsuccessful build" do
       it "updates last-failure-at value" do
-        success = false
-        repository.record_result(success) {}
+        repository.record_result(instance_double(BuildkiteBuildFinishedEvent, passed?: false, pipeline: "my-pipeline")) {}
 
         expect(fake_redis).to have_received(:set).with("last-failure-at-my-pipeline", instance_of(Integer))
       end
