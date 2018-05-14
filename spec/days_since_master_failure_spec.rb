@@ -16,52 +16,52 @@ describe Lita::Handlers::DaysSinceMasterFailure, lita_handler: true do
     context "a master build failed" do
       let(:event_json) {
         {
-          name: "build.finished",
-          build: {
-            finished_at: "2016-03-22 12:00:00",
-            branch: "master",
-            state: "failed"
+          "event" => "build.finished",
+          "build" => {
+            "finished_at" => "2016-03-22 12:00:00",
+            "branch" => "master",
+            "state" => "failed"
           },
-          pipeline: {
-            name: "tc"
+          "pipeline" => {
+            "name" => "tc"
           }
         }
       }
 
-      context "we've never reported a result" do
+      context "days_since_last_failure and prev_days_since_last_failure are equal" do
         before do
           allow(repository).to receive(:record_result).and_yield(0,0)
         end
 
-        it "should not send any messages" do
+        it "does not send any messages" do
           handler.timestamp_failure(payload)
           expect(robot).to_not have_received(:send_message)
         end
       end
 
-      context "the days since last failure has gone up to 1" do
+      context "days_since_last_failure is greater than prev_days_since_last_failure" do
         before do
           allow(repository).to receive(:record_result).and_yield(1,0)
         end
 
-        it "should send a message" do
+        it "sends a message" do
           handler.timestamp_failure(payload)
-          expect(robot).to_not have_received(:send_message).with(
-            a_kind_of(Lita::Room),
-            "Congratulations! 1 day(s) since the last master failure"
+          expect(robot).to have_received(:send_message).with(
+            an_instance_of(Lita::Source),
+            "Congratulations! 1 day(s) since the last master failure on tc"
           )
         end
       end
-      context "the days since last failure has gone down to 0" do
+      context "days_since_last_failure is less than prev_days_since_last_failure" do
         before do
           allow(repository).to receive(:record_result).and_yield(0, 1)
         end
 
-        it "should send a message" do
+        it "sends a message" do
           handler.timestamp_failure(payload)
-          expect(robot).to_not have_received(:send_message).with(
-            a_kind_of(Lita::Room),
-            "Oh Oh! 0 day(s) since the last master failure"
+          expect(robot).to have_received(:send_message).with(
+            an_instance_of(Lita::Source),
+            "Oh Oh, 0 day(s) since the last master failure on tc"
           )
         end
       end

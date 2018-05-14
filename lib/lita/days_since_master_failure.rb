@@ -24,14 +24,17 @@ module Lita
       private
 
       def process_build_finished(event, &block)
-        repository = DaysSinceMasterFailureRepository.new(redis, event.pipeline)
-        repository.record_result(event.passed?) do |days_since_last_failure, prev_days_since_last_failure|
+        repository(event).record_result(event.passed?) do |days_since_last_failure, prev_days_since_last_failure|
           if days_since_last_failure < prev_days_since_last_failure
             yield "Oh Oh, #{days_since_last_failure} day(s) since the last master failure on #{event.pipeline}"
           elsif days_since_last_failure > prev_days_since_last_failure
             yield "Congratulations! #{days_since_last_failure} day(s) since the last master failure on #{event.pipeline}"
           end
         end
+      end
+
+      def repository(event)
+        DaysSinceMasterFailureRepository.new(redis, event.pipeline)
       end
 
       def target
