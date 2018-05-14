@@ -8,24 +8,58 @@ RSpec.describe BuildStatusReport do
     context "days_since_last_failure and prev_days_since_last_failure are equal" do
       it "yields nothing" do
         expect { |b|
-          BuildStatusReport.new(event, 1, 1, &b)
+          BuildStatusReport.new(event, 1, 1, 0, &b)
         }.not_to yield_control
       end
     end
 
-    context "days_since_last_failure less than prev_days_since_last_failure" do
-      it "yields a happy message" do
-        expect { |b|
-          BuildStatusReport.new(event, 1, 0, &b)
-        }.to yield_with_args("tc is 1 day(s) without a failure!")
+    context "days_since_last_failure greater than prev_days_since_last_failure" do
+      let(:days_since_last_failure) { 2 }
+      let(:prev_days_since_last_failure) { 1 }
+
+      context "prev_days_since_last_failure greater than most_successful_days" do
+        let(:most_successful_days) { 0 }
+
+        it "yields a happy message" do
+          expect { |b|
+            BuildStatusReport.new(event, days_since_last_failure, prev_days_since_last_failure, most_successful_days, &b)
+          }.to yield_with_args("tc broke a new record! 2 days without a failure 🎉")
+        end
+      end
+
+      context "prev_days_since_last_failure less than most_successful_days" do
+        let(:most_successful_days) { 3 }
+
+        it "yields a happy message" do
+          expect { |b|
+            BuildStatusReport.new(event, days_since_last_failure, prev_days_since_last_failure, most_successful_days, &b)
+          }.to yield_with_args("tc is 2 days without a failure. The current record is 3. Aim for the top!")
+        end
       end
     end
 
-    context "days_since_last_failure greater than prev_days_since_last_failure" do
-      it "yields a sad message" do
-        expect { |b|
-          BuildStatusReport.new(event, 0, 1, &b)
-        }.to yield_with_args("tc failed after 1 day(s)")
+    context "days_since_last_failure less than prev_days_since_last_failure" do
+      let(:days_since_last_failure) { 0 }
+      let(:prev_days_since_last_failure) { 2 }
+
+      context "prev_days_since_last_failure greater than most_successful_days" do
+        let(:most_successful_days) { 0 }
+
+        it "yields a sad message" do
+          expect { |b|
+            BuildStatusReport.new(event, days_since_last_failure, prev_days_since_last_failure, most_successful_days, &b)
+          }.to yield_with_args("tc ended it's record breaking run of 2 days without a failure 😢")
+        end
+      end
+
+      context "prev_days_since_last_failure less than most_successful_days" do
+        let(:most_successful_days) { 3 }
+
+        it "yields a sad message" do
+          expect { |b|
+            BuildStatusReport.new(event, days_since_last_failure, prev_days_since_last_failure, most_successful_days, &b)
+          }.to yield_with_args("tc failed after 2 days. The current record is 3. Needs improvement!")
+        end
       end
     end
   end

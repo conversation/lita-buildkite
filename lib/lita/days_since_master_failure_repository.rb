@@ -17,7 +17,7 @@ class DaysSinceMasterFailureRepository
     touch_last_failure_at if !event.passed?
     touch_most_successful_days if !event.passed? && new_record?
 
-    BuildStatusReport.new(event, days_since_last_failure, last_reported_days) do |message|
+    BuildStatusReport.new(event, days_since_last_failure, last_reported_days, most_successful_days) do |message|
       yield message
     end
 
@@ -47,7 +47,7 @@ class DaysSinceMasterFailureRepository
   end
 
   def touch_most_successful_days
-    set_most_successful_days(days_since_last_failure)
+    set_most_successful_days(last_reported_days)
   end
 
   def fetch_last_failure_at
