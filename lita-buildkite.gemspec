@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name = "lita-buildkite"
-  spec.version = "0.2.0"
+  spec.version = "0.3.0"
   spec.summary = "Lita handler for interacting with buildkite.com, a continuous integration provider"
   spec.description = "Lita handler for interacting with buildkite.com, a continuous integration provider"
   spec.license = "MIT"

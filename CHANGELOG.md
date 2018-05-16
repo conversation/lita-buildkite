@@ -1,3 +1,7 @@
+## v0.3.0  (16th May 2018)
+* Store and report best records for each pipeline
+* Added CI
+
 ## v0.2.0  (21st October 2016)
 
 * Support for two buildkite events: build.finished and job.finished
