@@ -28,41 +28,27 @@ describe Lita::Handlers::DaysSinceMasterFailure, lita_handler: true do
         }
       }
 
-      context "days_since_last_failure and prev_days_since_last_failure are equal" do
+      context "record_result yields a message" do
         before do
-          allow(repository).to receive(:record_result).and_yield(0,0)
+          allow(repository).to receive(:record_result).and_yield("message")
+        end
+
+        it "sends a message" do
+          handler.timestamp_failure(payload)
+          expect(robot).to have_received(:send_message).with(
+            an_instance_of(Lita::Source), "message"
+          )
+        end
+      end
+
+      context "record_result does not yield a message" do
+        before do
+          allow(repository).to receive(:record_result)
         end
 
         it "does not send any messages" do
           handler.timestamp_failure(payload)
           expect(robot).to_not have_received(:send_message)
-        end
-      end
-
-      context "days_since_last_failure is greater than prev_days_since_last_failure" do
-        before do
-          allow(repository).to receive(:record_result).and_yield(1,0)
-        end
-
-        it "sends a message" do
-          handler.timestamp_failure(payload)
-          expect(robot).to have_received(:send_message).with(
-            an_instance_of(Lita::Source),
-            "Congratulations! 1 day(s) since the last master failure on tc"
-          )
-        end
-      end
-      context "days_since_last_failure is less than prev_days_since_last_failure" do
-        before do
-          allow(repository).to receive(:record_result).and_yield(0, 1)
-        end
-
-        it "sends a message" do
-          handler.timestamp_failure(payload)
-          expect(robot).to have_received(:send_message).with(
-            an_instance_of(Lita::Source),
-            "Oh Oh, 0 day(s) since the last master failure on tc"
-          )
         end
       end
     end
